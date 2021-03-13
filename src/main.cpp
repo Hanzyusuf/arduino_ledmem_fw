@@ -105,8 +105,8 @@ void makeBuzz(BuzzFreq buzzFreq);
 
 // --- SERIAL COMMUNICATION ---
 
-// - uncomment if using software serial, commend hardware serial declaration below
-SoftwareSerial mySerial(8, 9); // RX = 8, TX = 9
+// - uncomment if using software serial, comment hardware serial declaration below
+SoftwareSerial mySerial(8, 9); // board RX & ble TX = 8, board TX & ble RX = 9
 // - uncomment if using hardware serial, comment software serial declaration above
 // HardwareSerial& mySerial = Serial;
 
@@ -123,6 +123,7 @@ void setup() {
   // begin serial
   mySerial.begin(9600);
 
+  // buzz to indicate power on and ready
   makeBuzz(BuzzFreq::Buzz_Start_Game);
 }
 
@@ -389,10 +390,6 @@ void serial1_onCommandReceived(char* command, EasySerialCom::Error error) {
       memcpy(&cmdcpy, command, maxDataLength);
       char* commandElem = strtok(cmdcpy, ":"); // gets the 1st element at index 0
       commandElem = strtok(NULL, ":"); // gets the 2nd element at index 1
-      
-      //int bpm = 60;
-      //char text[256];
-      //writeToSerial(strncmp(commandElem, "EASY", 4));
 
       if(strncmp(commandElem, "EASY", 4) == 0)
         currentDifficulty = Difficulty::EASY;
@@ -409,10 +406,6 @@ void serial1_onCommandReceived(char* command, EasySerialCom::Error error) {
       bGodMode = true;
     else if(strcmp(command, "IAmNotALoser") == 0)
       bGodMode = false;
-    else if(strcmp(command, "Pause") == 0)
-      bGameRunning = false;
-    else if(strcmp(command, "Resume") == 0)
-      bGameRunning = true;
     else {
       responseChar = "<CMD_Response:Fail>";
       writeToSerial("<Error:unrecognized command>");
@@ -428,7 +421,6 @@ void serial1_onCommandReceived(char* command, EasySerialCom::Error error) {
     }
   }
 
-  //mySerial.flush();
   bListenForNewCommands = true;
 }
 

@@ -23,8 +23,6 @@ class EasySerialCom
     typedef void (*onCommandReceivedFP)(char*, Error);
 
   private:
-    //HardwareSerial& hwSerial;
-    //SoftwareSerial& swSerial;
     Stream& mySerial;
     char* receivedChars;
     const byte maxDataLength;
@@ -36,13 +34,6 @@ class EasySerialCom
     bool bDataExceededMaxBuffer = false;
 
   public:
-    // EasySerialCom(HardwareSerial& hwSerial, onCommandReceivedFP onCommandReceived, const byte maxDataLength = 64) : hwSerial(hwSerial), onCommandReceived(onCommandReceived), maxDataLength(maxDataLength) {
-    //   receivedChars = new char[maxDataLength];
-    // };
-
-    // EasySerialCom(SoftwareSerial& swSerial, onCommandReceivedFP onCommandReceived, const byte maxDataLength = 64) : swSerial(swSerial), onCommandReceived(onCommandReceived), maxDataLength(maxDataLength) {
-    //   receivedChars = new char[maxDataLength];
-    // };
 
     EasySerialCom(Stream& mySerial, onCommandReceivedFP onCommandReceived, const byte maxDataLength = 64) : mySerial(mySerial), onCommandReceived(onCommandReceived), maxDataLength(maxDataLength) {
       receivedChars = new char[maxDataLength];
@@ -72,12 +63,5 @@ class EasySerialCom
     };
 
 };
-
-// class EasySerialComListener
-// {
-//   public:
-//     virtual void onCommandReceived(char* command, byte length) = 0;
-//     virtual void onError(EasySerialCom::Error error) = 0;
-// };
 
 #endif
