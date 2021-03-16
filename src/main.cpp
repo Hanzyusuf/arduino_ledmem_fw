@@ -127,7 +127,8 @@ void setup() {
   makeBuzz(BuzzFreq::Buzz_Start_Game);
 }
 
-void loop() {// IMPORTANT - call loop on EasySerialCom object
+void loop() {
+  // IMPORTANT - call loop on EasySerialCom object
   if(bListenForNewCommands)
     easySerialCom1.loop();
 
@@ -385,6 +386,10 @@ void serial1_onCommandReceived(char* command, EasySerialCom::Error error) {
     }
     else if(strcmp(command, "Request_State:End_Game") == 0)
       endGame();
+    else if(strcmp(command, "Request_State:Pause_Game") == 0)
+      bGameRunning = false;
+    else if(strcmp(command, "Request_State:Resume_Game") == 0)
+      bGameRunning = true;
     else if(strstr(command, "Set_Difficulty:")) {
       char cmdcpy[maxDataLength];
       memcpy(&cmdcpy, command, maxDataLength);
