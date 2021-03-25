@@ -20,7 +20,7 @@ class EasySerialCom
       DataExceededMaxBuffer
     };
   
-    typedef void (*onCommandReceivedFP)(char*, Error);
+    typedef void (*onCommandReceivedFP)(Stream&, char*, Error);
 
   private:
     Stream& mySerial;

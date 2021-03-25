@@ -94,7 +94,7 @@ void startGame();
 void stopGame();
 void endGame();
 void gameOver();
-void serial1_onCommandReceived(char* command, EasySerialCom::Error error);
+void onCommandReceived(Stream& serialStream, char* command, EasySerialCom::Error error);
 void resetAllPins();
 void initVariables();
 void setGameState(GameState state);
@@ -111,7 +111,7 @@ SoftwareSerial mySerial(8, 9); // board RX & ble TX = 8, board TX & ble RX = 9
 // HardwareSerial& mySerial = Serial;
 
 // setup 'EasySerialCom' library
-EasySerialCom easySerialCom1(mySerial, serial1_onCommandReceived, maxDataLength);
+EasySerialCom easySerialCom1(mySerial, onCommandReceived, maxDataLength);
 
 // --- FUNCTIONS ---
 
@@ -344,7 +344,7 @@ void gameOver() {
   stopGame();
 }
 
-void serial1_onCommandReceived(char* command, EasySerialCom::Error error) {
+void onCommandReceived(Stream& serialStream, char* command, EasySerialCom::Error error) {
   bListenForNewCommands = false;
 
   //mySerial.print("\nreceived command: ");

@@ -46,7 +46,7 @@ void EasySerialCom::sendData() {
         // create and send copy to prevent user from manipulating the original array
         char cmdcpy[maxDataLength];
         memcpy(cmdcpy, receivedChars, maxDataLength);
-        onCommandReceived(cmdcpy, bDataExceededMaxBuffer ? Error::DataExceededMaxBuffer : Error::None);
+        onCommandReceived(mySerial ,cmdcpy, bDataExceededMaxBuffer ? Error::DataExceededMaxBuffer : Error::None);
     }
 }
 
