@@ -355,6 +355,7 @@ void onCommandReceived(Stream& serialStream, char* command, EasySerialCom::Error
 
     if(strcmp(command, "Request_State:Start_Game") == 0)
       startGame();
+
     else if(strstr(command, "Answer_Input:")) {
       if(gameState != GameState::Wait_For_Answer_Input) {
         responseChar = "<CMD_Response:Fail>";
@@ -384,12 +385,16 @@ void onCommandReceived(Stream& serialStream, char* command, EasySerialCom::Error
         }
       }
     }
+
     else if(strcmp(command, "Request_State:End_Game") == 0)
       endGame();
+
     else if(strcmp(command, "Request_State:Pause_Game") == 0)
       bGameRunning = false;
+
     else if(strcmp(command, "Request_State:Resume_Game") == 0)
       bGameRunning = true;
+
     else if(strstr(command, "Set_Difficulty:")) {
       char cmdcpy[maxDataLength];
       memcpy(&cmdcpy, command, maxDataLength);
@@ -407,10 +412,13 @@ void onCommandReceived(Stream& serialStream, char* command, EasySerialCom::Error
         writeToSerial("<Error:invalid set difficulty argument>");
       }
     }
+
     else if(strcmp(command, "IAmALoser") == 0)
       bGodMode = true;
+
     else if(strcmp(command, "IAmNotALoser") == 0)
       bGodMode = false;
+      
     else {
       responseChar = "<CMD_Response:Fail>";
       writeToSerial("<Error:unrecognized command>");
