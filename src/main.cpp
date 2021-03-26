@@ -106,9 +106,9 @@ void makeBuzz(BuzzFreq buzzFreq);
 // --- SERIAL COMMUNICATION ---
 
 // - uncomment if using software serial, comment hardware serial declaration below
-SoftwareSerial mySerial(8, 9); // board RX & ble TX = 8, board TX & ble RX = 9
+// SoftwareSerial mySerial(8, 9); // board RX & ble TX = 8, board TX & ble RX = 9
 // - uncomment if using hardware serial, comment software serial declaration above
-// HardwareSerial& mySerial = Serial;
+HardwareSerial& mySerial = Serial;
 
 // setup 'EasySerialCom' library
 EasySerialCom easySerialCom1(mySerial, onCommandReceived, maxDataLength);
