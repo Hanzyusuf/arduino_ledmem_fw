@@ -5,10 +5,10 @@
 // CHANGE VARIABLE VALUES AS REQUIRED BELOW
 const byte maxDataLength = 64; // max serial command length
 // variables for game setup
-const byte led_R = 2;
-const byte led_G = 3;
-const byte led_B = 4;
-const byte buzzer = 6;
+const byte led_R = 8;
+const byte led_G = 9;
+const byte led_B = 10;
+const byte buzzer = 12;
 // enum to map led to numbers (DO NOT ASSIGN VALUES TO ANY OF THEM!)
 enum Led_Index {
   LED_R,
@@ -106,7 +106,7 @@ void makeBuzz(BuzzFreq buzzFreq);
 // --- SERIAL COMMUNICATION ---
 
 // - uncomment if using software serial for BLE com
-// SoftwareSerial mySerial(8, 9); // board RX & ble TX = 8, board TX & ble RX = 9
+// SoftwareSerial mySerial(2, 3); // board RX & ble TX = 2, board TX & ble RX = 3
 // - uncomment if using hardware serial for USB com
 HardwareSerial& mySerial = Serial;
 // NOTE: you can modify the code to allow communication through both serial streams.
