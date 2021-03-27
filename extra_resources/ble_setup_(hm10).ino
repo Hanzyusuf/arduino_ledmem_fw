@@ -25,7 +25,7 @@
 
 #include <SoftwareSerial.h>
 
-SoftwareSerial HM10(8, 9); // board RX & ble TX = 8, board TX & ble RX = 9
+SoftwareSerial HM10(2, 3); // board RX & ble TX = 2, board TX & ble RX = 3
 
 void setup() {
   Serial.begin(9600);
