@@ -187,10 +187,6 @@ void gameLoop() {
         timeElapsed_ShowProblem_Interval = 0;
 
         makeBuzz(BuzzFreq::Buzz_Show_Problem_Led_Glowed);
-
-        mySerial.print("led index: ");
-        mySerial.print(ledIndex);
-        mySerial.print("\n");
       }
       else if(tempLedMemoryCount >= currentLedMemoryLength) {
         tempLedMemoryCount = 0;
