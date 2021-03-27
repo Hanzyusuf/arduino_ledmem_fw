@@ -106,13 +106,14 @@ void makeBuzz(BuzzFreq buzzFreq);
 // --- SERIAL COMMUNICATION ---
 
 // - uncomment if using software serial for BLE com
-// SoftwareSerial mySerial(2, 3); // board RX & ble TX = 2, board TX & ble RX = 3
+SoftwareSerial bleSerial(2, 3); // board RX & ble TX = 2, board TX & ble RX = 3
 // - uncomment if using hardware serial for USB com
-HardwareSerial& mySerial = Serial;
+HardwareSerial& usbSerial = Serial;
 // NOTE: you can modify the code to allow communication through both serial streams.
 
 // setup 'EasySerialCom' library
-EasySerialCom easySerialCom1(mySerial, onCommandReceived, maxDataLength);
+EasySerialCom easySerialCom_BLE(bleSerial, onCommandReceived, maxDataLength);
+EasySerialCom easySerialCom_USB(usbSerial, onCommandReceived, maxDataLength);
 
 // --- FUNCTIONS ---
 
@@ -122,7 +123,8 @@ void setup() {
   initVariables();
 
   // begin serial
-  mySerial.begin(9600);
+  bleSerial.begin(9600);
+  usbSerial.begin(9600);
 
   // buzz to indicate power on and ready
   makeBuzz(BuzzFreq::Buzz_Start_Game);
@@ -130,8 +132,10 @@ void setup() {
 
 void loop() {
   // IMPORTANT - call loop on EasySerialCom object
-  if(bListenForNewCommands)
-    easySerialCom1.loop();
+  if(bListenForNewCommands){
+    easySerialCom_BLE.loop();
+    easySerialCom_USB.loop();
+  }
 
   if(bGameRunning)
     gameLoop();
@@ -188,9 +192,9 @@ void gameLoop() {
 
         makeBuzz(BuzzFreq::Buzz_Show_Problem_Led_Glowed);
 
-        mySerial.print("led index: ");
-        mySerial.print(ledIndex);
-        mySerial.print("\n");
+        //mySerial.print("led index: ");
+        //mySerial.print(ledIndex);
+        //mySerial.print("\n");
       }
       else if(tempLedMemoryCount >= currentLedMemoryLength) {
         tempLedMemoryCount = 0;
@@ -522,8 +526,11 @@ byte getLedPinFromIndex(unsigned int ledIndex) {
 }
 
 void writeToSerial(char* msg) {
-  mySerial.write(msg);
-  mySerial.write("\n");
+  bleSerial.write(msg);
+  bleSerial.write("\n");
+  
+  usbSerial.write(msg);
+  usbSerial.write("\n");
 }
 
 void makeBuzz(BuzzFreq buzzFreq) {
